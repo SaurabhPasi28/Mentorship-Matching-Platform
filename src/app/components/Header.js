@@ -3,9 +3,12 @@
 import Link from 'next/link';
 import Image from 'next/image';
 import { useState } from 'react';
+import { NextResponse } from 'next/server';
 
 export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
+  // const token= request.cookies.get("token")?.value || ""
+  // const [login, setLogin]=useState("Login")
 
   return (
     <header className="bg-blue-600 text-white shadow-md sticky top-0 z-50 font-bold text-xl ">
@@ -27,8 +30,10 @@ export default function Header() {
           <Link href="/" className="hover:underline">Home</Link>
           <Link href="/browse" className="hover:underline">Browse</Link>
           <Link href="/matches" className="hover:underline">Matches</Link>
-          {/* <Link href="/profile" className="hover:underline">Profile</Link> */}
+          <Link href="/profile" className="hover:underline">Profile</Link>
+          
           <Link href="/login" className="hover:underline">Login</Link>
+          <Link href="/api/users/logout" className="hover:underline">Logout</Link>
         </nav>
 
         {/* Mobile Menu Button */}
