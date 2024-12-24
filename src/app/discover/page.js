@@ -4,6 +4,7 @@ import { useEffect, useState } from "react";
 import Link from 'next/link';
 import axios from "axios";
 import SendRequestButton from "@/app/components/SendRequestButton"; // Import the button
+import Loading from "../loading";
 
 export default function DiscoverPage() {
     const [users, setUsers] = useState([]);
@@ -37,8 +38,8 @@ export default function DiscoverPage() {
 
     if (loading) {
         return (
-            <div className="flex justify-center items-center min-h-screen">
-                <div className="text-xl font-semibold text-gray-800 animate-pulse">Loading users...</div>
+            <div>
+                <Loading/>
             </div>
         );
     }
