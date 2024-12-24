@@ -1,178 +1,12 @@
-// // "use client"
-// // import React, { useState } from 'react'
-// // import Link from 'next/link'
-// // import axios from 'axios'
-// // import toast from 'react-hot-toast'
-// // import { useRouter } from 'next/navigation'
+"use client";
 
-// // export default function ProfilePage() {
-// //   const router = useRouter()
-  
-// //   const [data,setData]=useState("");
-
-// //   const getUserDetails = async()=>{
-// //     try {
-// //       console.log("---------->firt try")
-// //       const res = await axios.post("/api/users/profile")
-// //       console.log(res.data.data);
-// //       setData(res.data.data._id);
-// //     } catch (error) {
-// //       console.log(error)
-// //       toast.error(error.message)
-// //     }
-// //   }
-// //   const logOut = async()=>{
-// //     try {
-// //       await axios.get("/api/users/logout")
-// //       toast.success("Logout successfully")
-// //       console.log("Logout successfully")
-// //       router.push("/login")
-// //     } catch (error) {
-// //       console.log(error.message)
-// //       toast.error(error.message)
-// //     }
-// //   }
-// //   return (
-
-// //     <div className='flex flex-col items-center justify-center min-h-screen py-2'>
-// //       <h1>Profile Page</h1>
-// //       <hr/>
-// //       <h2> {data=== "" ? "Nothing": <Link href={`/profile/${data}`}>tetst{data}</Link>}</h2>
-// //       <hr/>
-// //       <button className='' 
-// //       onClick={logOut}>Logout
-
-// //       </button>
-    
-// //       <button className='' 
-// //       onClick={getUserDetails}>
-// //         Get User Details
-// //       </button>
-// //     </div>
-// //   )
-// // }
-
-
-// "use client";
-// import React, { useState } from "react";
-// import Link from "next/link";
-// import axios from "axios";
-// import toast from "react-hot-toast";
-// import { useRouter } from "next/navigation";
-
-// export default function ProfilePage() {
-//   const router = useRouter();
-//   const [data, setData] = useState(null); // Use null for uninitialized state
-
-//   const getUserDetails = async () => {
-//     try {
-//       const res = await axios.post("/api/users/profile");
-//       if (res.data.data) {
-//         setData(res.data.data._id); // Assuming the user has an '_id'
-//       } else {
-//         toast.error("No user data found.");
-//       }
-//     } catch (error) {
-//       toast.error(error.response?.data?.error || error.message || "Failed to fetch user details.");
-//     }
-//   };
-
-//   const logOut = async () => {
-//     try {
-//       await axios.get("/api/users/logout");
-//       toast.success("Logged out successfully.");
-//       router.push("/login");
-//     } catch (error) {
-//       toast.error(error.message || "Logout failed.");
-//     }
-//   };
-
-//   return (
-//     <div className="flex flex-col items-center justify-center min-h-screen py-2">
-//       <h1 className="text-xl font-semibold mb-4">Profile Page</h1>
-//       <hr className="my-4" />
-//       {data === null ? (
-//         <h2>No user data available. Please login again.</h2>
-//       ) : (
-//         <h2>
-//           <Link href={`/profile/${data}`} className="text-blue-500 hover:text-blue-700">
-//             View Profile: {data}
-//           </Link>
-//         </h2>
-//       )}
-//       <hr className="my-4" />
-//       <div className="flex space-x-4">
-//         <button
-//           className="bg-red-500 text-white py-2 px-4 rounded hover:bg-red-600"
-//           onClick={logOut}
-//         >
-//           Logout
-//         </button>
-//         <button
-//           className="bg-blue-500 text-white py-2 px-4 rounded hover:bg-blue-600"
-//           onClick={getUserDetails}
-//         >
-//           Get User Details
-//         </button>
-//       </div>
-//     </div>
-//   );
-// }
-
-
-// src/app/profile/page.js
-// 'use client';
-// import { useEffect, useState } from 'react';
-// import { useRouter } from 'next/navigation';
-// import axios from 'axios';
-
-// export default function ProfilePage() {
-//   const [user, setUser] = useState(null);
-//   const router = useRouter();
-
-//   useEffect(() => {
-//     // Fetch the user data when the component mounts
-//     const fetchUserProfile = async () => {
-//       try {
-//         const response = await axios.get('/api/users/profile');
-//         setUser(response.data);
-//       } catch (error) {
-//         console.error(error);
-//       }
-//     };
-//     fetchUserProfile();
-//   }, []);
-
-//   if (!user) {
-//     return <div>Loading...</div>;
-//   }
-
-//   return (
-//     <div className="flex flex-col items-center justify-center min-h-screen">
-//       <h1 className="text-2xl font-bold">Profile</h1>
-//       <hr />
-//       <p><strong>Username:</strong> {user.username}</p>
-//       <p><strong>Email:</strong> {user.email}</p>
-//       <p><strong>Role:</strong> {user.role}</p>
-//       <button
-//         onClick={() => router.push('/')}
-//         className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
-//       >
-//         Go Home
-//       </button>
-//     </div>
-//   );
-// }
-
-
-'use client';
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
-  const [isEditing, setIsEditing] = useState(false); // Track edit mode
+  const [isEditing, setIsEditing] = useState(false);
   const [formData, setFormData] = useState({});
   const router = useRouter();
 
@@ -195,122 +29,228 @@ export default function ProfilePage() {
     setFormData({ ...formData, [name]: value });
   };
 
+  const handleArrayInputChange = (name, value) => {
+    setFormData({ ...formData, [name]: value.split(',').map((item) => item.trim()) });
+  };
+
   const handleSave = async () => {
     try {
       const response = await axios.put('/api/users/profile', formData);
+      console.log("Profile updated:", response.data);
       setUser(response.data.data);
       setIsEditing(false); // Exit edit mode
-      alert("Profile updated successfully!");
+      alert('Profile updated successfully!');
     } catch (error) {
       console.error(error);
-      alert("Failed to update profile.");
+      alert('Failed to update profile.');
     }
   };
 
   if (!user) {
-    return <div>Loading...</div>;
+    return <div className="text-center text-lg">Loading...</div>;
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <h1 className="text-2xl font-bold">Profile</h1>
-      <hr />
-
-      {isEditing ? (
-        // Editable form
-        <form className="w-full max-w-md space-y-4">
-          <div>
-            <label className="block font-semibold">Username:</label>
-            <input
-              type="text"
-              name="username"
-              value={formData.username}
-              onChange={handleInputChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
-          <div>
-            <label className="block font-semibold">Email:</label>
-            <input
-              type="email"
-              name="email"
-              value={formData.email}
-              onChange={handleInputChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
-          <div>
-            <label className="block font-semibold">Role:</label>
-            <input
-              type="text"
-              name="role"
-              value={formData.role}
-              onChange={handleInputChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
-          <div>
-            <label className="block font-semibold">Skills:</label>
-            <input
-              type="text"
-              name="skills"
-              value={formData.skills}
-              onChange={handleInputChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
-          <div>
-            <label className="block font-semibold">Interests:</label>
-            <input
-              type="text"
-              name="interests"
-              value={formData.interests}
-              onChange={handleInputChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
-          <div>
-            <label className="block font-semibold">Availability:</label>
-            <input
-              type="text"
-              name="availability"
-              value={formData.availability}
-              onChange={handleInputChange}
-              className="w-full border p-2 rounded"
-            />
-          </div>
-          <button
-            type="button"
-            onClick={handleSave}
-            className="bg-green-500 text-white py-2 px-4 rounded"
-          >
-            Save
-          </button>
-          <button
-            type="button"
-            onClick={() => setIsEditing(false)}
-            className="bg-gray-500 text-white py-2 px-4 rounded"
-          >
-            Cancel
-          </button>
-        </form>
-      ) : (
-        // Display user profile
-        <div>
-          <p><strong>Username:</strong> {user.username}</p>
-          <p><strong>Email:</strong> {user.email}</p>
-          <p><strong>Role:</strong> {user.role}</p>
-          <p><strong>Skills:</strong> {user.skills || "N/A"}</p>
-          <p><strong>Interests:</strong> {user.interests || "N/A"}</p>
-          <p><strong>Availability:</strong> {user.availability || "N/A"}</p>
-          <button
-            onClick={() => setIsEditing(true)}
-            className="bg-blue-500 text-white py-2 px-4 rounded mt-4"
-          >
-            Edit Profile
-          </button>
+    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center p-6">
+      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-xl transform transition-all duration-500 ease-in-out">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
+          <p className="text-gray-500 text-lg">Manage your profile and preferences</p>
         </div>
-      )}
+
+        {isEditing ? (
+          // Editable form
+          <form className="space-y-6">
+            <div className="flex flex-col md:flex-row space-x-4">
+              <div className="flex-1">
+                <label className="block font-semibold text-gray-700">Username</label>
+                <input
+                  type="text"
+                  name="username"
+                  value={formData.username || ''}
+                  onChange={handleInputChange}
+                  className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+              <div className="flex-1">
+                <label className="block font-semibold text-gray-700">Email</label>
+                <input
+                  type="email"
+                  name="email"
+                  value={formData.email || ''}
+                  onChange={handleInputChange}
+                  className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+
+            <div className="space-y-4">
+              <div>
+                <label className="block font-semibold text-gray-700">Bio</label>
+                <textarea
+                  name="bio"
+                  value={formData.bio || ''}
+                  onChange={handleInputChange}
+                  className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div className="flex flex-col md:flex-row space-x-4">
+                <div className="flex-1">
+                  <label htmlFor="gender" className="block font-semibold text-gray-700">Gender</label>
+                  <select
+                    id="gender"
+                    name="gender"
+                    value={formData.gender || ''}
+                    onChange={handleInputChange}
+                    className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="male">Male</option>
+                    <option value="female">Female</option>
+                    <option value="other">Other</option>
+                  </select>
+                </div>
+
+                <div className="flex-1">
+                  <label htmlFor="role" className="block font-semibold text-gray-700">Role</label>
+                  <select
+                    id="role"
+                    name="role"
+                    value={formData.role || ''}
+                    onChange={handleInputChange}
+                    className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                  >
+                    <option value="mentee">Mentee</option>
+                    <option value="mentor">Mentor</option>
+                  </select>
+                </div>
+              </div>
+
+              <div>
+                <label className="block font-semibold text-gray-700">Skills</label>
+                <input
+                  type="text"
+                  name="skills"
+                  value={formData.skills?.join(', ') || ''}
+                  onChange={(e) => handleArrayInputChange('skills', e.target.value)}
+                  className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+
+              <div>
+                <label className="block font-semibold text-gray-700">Interests</label>
+                <input
+                  type="text"
+                  name="interests"
+                  value={formData.interests?.join(', ') || ''}
+                  onChange={(e) => handleArrayInputChange('interests', e.target.value)}
+                  className="w-full p-4 border rounded-md focus:outline-none focus:ring-2 focus:ring-purple-500"
+                />
+              </div>
+            </div>
+
+            <div className="flex justify-between mt-8">
+              <button
+                type="button"
+                onClick={handleSave}
+                className="px-6 py-3 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300 ease-in-out"
+              >
+                Save Changes
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsEditing(false)}
+                className="px-6 py-3 bg-gray-500 text-white rounded-md shadow-md hover:bg-gray-600 transition duration-300 ease-in-out"
+              >
+                Cancel
+              </button>
+            </div>
+          </form>
+        ) : (
+          // View profile
+          <div className="space-y-6">
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
+            <div className="flex items-center space-x-4">
+              <i className="fas fa-user text-blue-600"></i>
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Username</p>
+                <p className="text-lg text-gray-600">{user.username}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
+            <div className="flex items-center space-x-4">
+              <i className="fas fa-envelope text-blue-600"></i>
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Email</p>
+                <p className="text-lg text-gray-600">{user.email}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
+            <div className="flex items-center space-x-4">
+              <i className="fas fa-info-circle text-blue-600"></i>
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Bio</p>
+                <p className="text-lg text-gray-600">{user.bio || 'N/A'}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
+            <div className="flex items-center space-x-4">
+              <i className="fas fa-genderless text-blue-600"></i>
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Gender</p>
+                <p className="text-lg text-gray-600">{user.gender}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
+            <div className="flex items-center space-x-4">
+              <i className="fas fa-user-tag text-blue-600"></i>
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Role</p>
+                <p className="text-lg text-gray-600">{user.role}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
+            <div className="flex items-center space-x-4">
+              <i className="fas fa-tools text-blue-600"></i>
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Skills</p>
+                <p className="text-lg text-gray-600">{user.skills.length ? user.skills.join(', ') : 'N/A'}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
+            <div className="flex items-center space-x-4">
+              <i className="fas fa-heart text-blue-600"></i>
+              <div>
+                <p className="text-lg font-semibold text-gray-700">Interests</p>
+                <p className="text-lg text-gray-600">{user.interests.length ? user.interests.join(', ') : 'N/A'}</p>
+              </div>
+            </div>
+          </div>
+        
+          <div className="mt-8">
+            <button
+              onClick={() => setIsEditing(true)}
+              className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
+            >
+              Edit Profile
+            </button>
+          </div>
+        </div>
+        
+        )}
+      </div>
     </div>
   );
 }

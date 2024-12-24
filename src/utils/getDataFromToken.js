@@ -1,26 +1,29 @@
-import { NextResponse } from "next/server";
 import jwt from "jsonwebtoken";
+import { NextResponse } from "next/server";
 
-// Utility function to get user data from token (e.g., user ID)
 export const getDataFromToken = (request) => {
     try {
-        // Retrieve the token from the request cookies
         const token = request.cookies.get("token")?.value || "";
 
-        // If no token is present, return null (indicating no user is authenticated)
         if (!token) {
             return null;
         }
 
-        // Verify and decode the token using JWT
         const decodedToken = jwt.verify(token, process.env.JWT_SECRET);
+        console.log("Token data: ", decodedToken);
 
-        // Return the user ID from the decoded token
         return decodedToken.id;
-
     } catch (error) {
-        // Handle errors gracefully and return null if verification fails (invalid/expired token)
         console.error("Token verification failed:", error.message);
+
+        // Check for token expiration and redirect to login
+        if (error.name === "TokenExpiredError") {
+            const url = new URL("/login", request.url);
+            url.searchParams.set("alert", "session_expired"); // Optional: Pass a message to the login page
+            return NextResponse.redirect(url);
+        }
+
         return null;
     }
-}
+};
+

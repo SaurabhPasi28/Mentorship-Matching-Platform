@@ -108,9 +108,10 @@ export default function LoginPage() {
     e.preventDefault();
     try {
       setLoading(true);
-      const response = await axios.post("/api/users/login", formData);
+      // Include credentials for cookie handling
+      const response = await axios.post("/api/users/login", formData, { withCredentials: true });
       toast.success("Login successful!");
-      router.push("/profile");
+      router.push("/profile"); // Redirect to profile page
     } catch (error) {
       const errorMessage = error.response?.data?.error || "Login failed. Please try again.";
       toast.error(errorMessage);
@@ -185,3 +186,4 @@ export default function LoginPage() {
     </div>
   );
 }
+
