@@ -32,9 +32,9 @@ export async function GET(request) {
     // Define the matchmaking logic
     const oppositeRole = role === "mentor" ? "mentee" : "mentor"; // Opposite role
     const matches = await User.find({
-      role: oppositeRole, // Match users with the opposite role
-      skills: { $in: skills }, // Match users with at least one common skill
-    }).select("-password"); // Exclude sensitive fields like password
+      role: oppositeRole,
+      skills: { $in: skills },
+    }).select("-password"); 
 
     return NextResponse.json({
       matches,

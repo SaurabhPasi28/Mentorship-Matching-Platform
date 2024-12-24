@@ -4,29 +4,28 @@ import { useEffect, useState } from "react";
 import Link from "next/link";
 import axios from "axios";
 import SendRequestButton from "@/app/components/SendRequestButton";
-import { motion } from "framer-motion"; // For smooth animations
-import UserCard from "@/app/components/UserCard"; // Assuming the UserCard component
+import { motion } from "framer-motion";
 import Loading from "../loading";
 
 export default function MatchmakingPage() {
-  const [matches, setMatches] = useState([]); // State to hold the list of matches
-  const [loading, setLoading] = useState(true); // Loading state
-  const [error, setError] = useState(null); // Error state
+  const [matches, setMatches] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
 
-  // Function to fetch matches from the API
+
   const fetchMatches = async () => {
     try {
-      const response = await axios.get("/api/matchmaking"); // API endpoint for matchmaking
-      setMatches(response.data.matches); // Update state with the list of matches
-      setLoading(false); // Set loading to false after data is fetched
+      const response = await axios.get("/api/matchmaking");
+      setMatches(response.data.matches);
+      setLoading(false);
     } catch (err) {
-      setError("Error fetching matches."); // Handle error and update state
-      setLoading(false); // Set loading to false even on error
+      setError("Error fetching matches."); 
+      setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchMatches(); // Fetch matches when the component mounts
+    fetchMatches(); 
   }, []);
 
   if (loading)
@@ -34,7 +33,7 @@ export default function MatchmakingPage() {
       <p>
         <Loading/>
       </p>
-    ); // Show loading state while data is being fetched
+    ); 
 
   if (error)
     return (

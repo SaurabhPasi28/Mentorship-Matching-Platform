@@ -15,7 +15,7 @@ export async function GET() {
       httpOnly: true,
       secure: true,
       sameSite: "strict",
-      expires: new Date(0), // Explicitly set the expiration date to the past
+      expires: new Date(0), 
     });
 
     return response;

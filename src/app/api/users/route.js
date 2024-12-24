@@ -1,4 +1,3 @@
-// /src/app/api/auth/user/route.js
 import { NextResponse } from "next/server";
 import { getDataFromToken } from "@/utils/getDataFromToken";
 

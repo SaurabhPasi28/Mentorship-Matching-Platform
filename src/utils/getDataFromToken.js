@@ -15,12 +15,9 @@ export const getDataFromToken = (request) => {
         return decodedToken.id;
     } catch (error) {
         console.error("Token verification failed:", error.message);
-
-        // Check for token expiration and redirect to login
         if (error.name === "TokenExpiredError") {
             const url = new URL("/login", request.url);
-            url.searchParams.set("alert", "session_expired"); // Optional: Pass a message to the login page
-            return NextResponse.redirect(url);
+            url.searchParams.set("alert", "session_expired");
         }
 
         return null;

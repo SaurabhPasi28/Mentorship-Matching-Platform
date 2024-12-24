@@ -40,12 +40,6 @@ export async function POST(req, { params }) {
 }
 
 
-
-
-// import User from "@/models/user";
-// import { connectToDatabase } from "@/utils/db";
-// import { getDataFromToken } from "@/utils/getDataFromToken";
-
 export async function GET(req, { params }) {
   try {
     await dbconnect();

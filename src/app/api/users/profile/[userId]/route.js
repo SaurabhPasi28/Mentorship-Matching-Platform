@@ -2,7 +2,6 @@ import { dbconnect } from "@/dbConfig/dbconnect";
 import User from "@/models/userModel";
 import { NextResponse } from "next/server";
 
-// Connect to the database
 dbconnect();
 
 export async function GET(request, { params }) {

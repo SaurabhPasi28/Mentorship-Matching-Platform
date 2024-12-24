@@ -17,7 +17,7 @@ export async function GET(request) {
 
         // Apply filters if they exist
         if (role) query.role = role;
-        if (skills) query.skills = { $in: skills.split(",") }; // Example: "React,Node.js"
+        if (skills) query.skills = { $in: skills.split(",") };
         if (interests) query.interests = { $in: interests.split(",") };
 
         const users = await User.find(query).select("-password");
