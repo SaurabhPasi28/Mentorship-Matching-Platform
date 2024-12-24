@@ -23,19 +23,16 @@ export default function SignupPage() {
   };
 
   const onSignup = async (e) => {
-    e.preventDefault(); // Prevent default form submission behavior
+    e.preventDefault();
     try {
       setLoading(true);
       const response = await axios.post("/api/users/signup", formData);
-      // console.log("--------formdata",formData)
-      console.log("Signup successfully ", response);
-      toast.success("Signup successfully!");
-      
       router.push("/login");
+      toast.success(response.data.message || "Signup successful!");
     } catch (error) {
-      const errorMessage = error.response?.data?.message || error.message || "Signup Failed";
-      console.error("Signup Failed:-----< ", errorMessage);
-      toast.error(error);
+      const errorMessage = error.response?.data?.error || error.message || "Signup Failed";
+      console.error("Signup Failed: ", errorMessage);
+      toast.error(errorMessage);
     } finally {
       setLoading(false);
     }
@@ -53,16 +50,12 @@ export default function SignupPage() {
       >
         <h2 className="text-2xl font-bold mb-4 text-center">
           {loading ? "Processing ..." : "Sign Up"}
-          {/* Sign Up */}
         </h2>
 
         <div className="mb-4">
-          <label htmlFor="username" className="block text-sm font-medium">
-            Name
-          </label>
+          <label htmlFor="username" className="block text-sm font-medium">Name</label>
           <input
             id="username"
-            name="username"
             type="text"
             value={formData.username}
             onChange={(e) => setFormData({ ...formData, username: e.target.value })}
@@ -73,12 +66,9 @@ export default function SignupPage() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="email" className="block text-sm font-medium">
-            Email
-          </label>
+          <label htmlFor="email" className="block text-sm font-medium">Email</label>
           <input
             id="email"
-            name="email"
             type="email"
             value={formData.email}
             onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -89,12 +79,9 @@ export default function SignupPage() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="password" className="block text-sm font-medium">
-            Password
-          </label>
+          <label htmlFor="password" className="block text-sm font-medium">Password</label>
           <input
             id="password"
-            name="password"
             type="password"
             value={formData.password}
             onChange={(e) => setFormData({ ...formData, password: e.target.value })}
@@ -105,12 +92,9 @@ export default function SignupPage() {
         </div>
 
         <div className="mb-4">
-          <label htmlFor="role" className="block text-sm font-medium">
-            Role
-          </label>
+          <label htmlFor="role" className="block text-sm font-medium">Role</label>
           <select
             id="role"
-            name="role"
             value={formData.role}
             onChange={(e) => setFormData({ ...formData, role: e.target.value })}
             className="w-full px-3 py-2 border rounded"
@@ -123,13 +107,11 @@ export default function SignupPage() {
         <button
           type="submit"
           className={`w-full py-2 rounded text-white transition ${
-            buttonDisabled
-              ? "bg-blue-500 cursor-not-allowed opacity-50"
-              : "bg-blue-500 hover:bg-blue-600"
+            buttonDisabled ? "bg-blue-500 cursor-not-allowed opacity-50" : "bg-blue-500 hover:bg-blue-600"
           }`}
           disabled={buttonDisabled}
         >
-          {buttonDisabled ? "No signup" : "Signup"}
+          {loading ? "Signing up..." : "Signup"}
         </button>
       </form>
     </div>

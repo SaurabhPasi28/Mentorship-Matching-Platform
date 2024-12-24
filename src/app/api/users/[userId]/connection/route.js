@@ -5,7 +5,7 @@ import { getDataFromToken } from "@/utils/getDataFromToken";
 export async function POST(req, { params }) {
   try {
     await dbconnect();
-    const { userId } = params;
+    const { userId } = await params;
     const loggedInUserId = getDataFromToken(req);
 
     if (!loggedInUserId) {
@@ -54,7 +54,7 @@ export async function POST(req, { params }) {
 export async function GET(req, { params }) {
   try {
     await dbconnect();
-    const { userId } = params;
+    const { userId } = await params;
 
     const loggedInUserId = getDataFromToken(req);
     if (!loggedInUserId || loggedInUserId !== userId) {

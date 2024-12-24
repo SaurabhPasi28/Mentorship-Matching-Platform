@@ -9,7 +9,7 @@ function UserCard({ user }) {
   // Send request function
   const sendRequest = async () => {
     try {
-      await axios.post("/api/connection-requests", { receiverId: user._id, message: "I want to connect with you." });
+      await axios.post("/api/matchmaking", { receiverId: user._id, message: "I want to connect with you." });
       setStatus("Request sent!");
     } catch (error) {
       setStatus("Error");

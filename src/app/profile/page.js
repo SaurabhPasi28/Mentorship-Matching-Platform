@@ -3,6 +3,7 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
+import Loading from '@/app/loading';
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -47,7 +48,7 @@ export default function ProfilePage() {
   };
 
   if (!user) {
-    return <div className="text-center text-lg">Loading...</div>;
+    return <div ><Loading/></div>;
   }
 
   return (

@@ -6,7 +6,7 @@ import { getDataFromToken } from "@/utils/getDataFromToken";
 export async function POST(req, { params }) {
   try {
     await dbconnect();
-    const { userId } = params;
+    const { userId } =await params;
 
     const loggedInUserId = getDataFromToken(req);
     if (!loggedInUserId) {
@@ -26,9 +26,9 @@ export async function POST(req, { params }) {
       return new Response(JSON.stringify({ message: "Request already sent" }), { status: 400 });
     }
 
-    // if (user.connections.includes(loggedInUserId)) {
-    //   return new Response(JSON.stringify({ message: "Request already sent" }), { status: 400 });
-    // }
+    if (user.connections.includes(loggedInUserId)) {
+      return new Response(JSON.stringify({ message: "Already connected" }), { status: 400 });
+    }
 
     user.requests.push(loggedInUserId);
     await user.save();
@@ -49,7 +49,7 @@ export async function POST(req, { params }) {
 export async function GET(req, { params }) {
   try {
     await dbconnect();
-    const { userId } = params;
+    const { userId } =await params;
 
     const loggedInUserId = getDataFromToken(req);
     if (!loggedInUserId || loggedInUserId !== userId) {
