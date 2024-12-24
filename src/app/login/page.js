@@ -125,13 +125,13 @@ export default function LoginPage() {
   }, [formData]);
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100 sm:">
       <form
         onSubmit={onLogin}
         className="w-full max-w-md bg-white p-6 rounded-md shadow-md"
       >
         <h2 className="text-2xl font-bold mb-4 text-center">
-          {loading ? "Processing..." : "Login"}
+          Login
         </h2>
 
         <div className="mb-4">

@@ -54,15 +54,17 @@ export default function Header() {
 
   return (
     <header className="bg-blue-600 text-white shadow-md sticky top-0 z-50 font-bold text-xl">
-      <div className="container mx-auto px-4 flex justify-between items-center py-2">
+      <div className="W-[100%]container px-2 flex justify-between items-center  py-2">
         {/* Logo Section */}
+        <div>
         <Link href="/" className="flex items-center">
-          <Image src="/logo.svg" alt="Logo" width={40} height={40} className="mr-1" />
+          {/* <Image src="/logo.svg" alt="Logo" width={40} height={40} className="mr-1" /> */}
           <span className="text-lg font-bold">Mentorship Platform</span>
         </Link>
+        </div>
 
         {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-6">
+        <nav className="hidden md:flex space-x-2">
           <Link href="/" className="hover:underline">
             Home
           </Link>

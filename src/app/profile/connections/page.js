@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Link from 'next/link'; // For navigation to user profiles
-
+import Image from 'next/image';
 export default function ConnectionsPage() {
   const [connections, setConnections] = useState([]);
   const [loggedInUserId, setLoggedInUserId] = useState(null);
@@ -48,28 +48,28 @@ export default function ConnectionsPage() {
             {connections.map((user) => (
               <div
                 key={user._id}
-                className="flex items-center justify-between bg-gradient-to-r from-indigo-100 via-blue-100 to-teal-100 rounded-lg p-4 shadow-md hover:scale-105 transform transition duration-300 ease-out"
+                className="flex  flex-col sm:flex-row items-center justify-between bg-gradient-to-r from-indigo-100 via-blue-100 to-teal-100 rounded-lg p-4 shadow-md hover:scale-105 transform transition duration-300 ease-out"
               >
-                <div className="flex items-center space-x-4">
+                <div className="flex flex-col md:flex-row items-center space-x-4 ">
                   {/* User Avatar */}
                   <img
                     src={user.avatar || '/default-avatar.png'} // Use default if no avatar is present
                     alt={user.username}
-                    className="w-16 h-16 rounded-full object-cover shadow-md"
+                    className="w-16 h-16 rounded-full object-cover shadow-md mb-4"
                   />
                   <div>
                     <Link href={`/profile/${user._id}`} className="text-xl font-semibold text-indigo-600 hover:underline">
                       {user.username}
                     </Link>
                     <p className="text-sm text-gray-600 mt-1">{user.email}</p>
-                    <p className="text-sm text-gray-500 mt-2">{user.about || 'No bio available'}</p>
+                    <p className="text-sm text-gray-500 mt-2">{user.bio}</p>
                     {/* <p className="text-sm text-gray-600 mt-2">
                       <strong className="text-gray-700">Skills:</strong> {user.skills.length ? user.skills.join(', ') : 'No skills listed'}
                     </p> */}
                   </div>
                 </div>
 
-                <div className="space-x-4 flex items-center">
+                <div className="space-x-4 mt-4 flex items-center">
                   {/* View Profile Button */}
                   <Link
                     href={`/profile/${user._id}`}

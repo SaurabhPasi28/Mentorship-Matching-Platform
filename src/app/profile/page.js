@@ -51,8 +51,8 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center p-6">
-      <div className="w-full max-w-4xl bg-white p-8 rounded-lg shadow-xl transform transition-all duration-500 ease-in-out">
+    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center p-4 md:p-6">
+      <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-xl transform transition-all duration-500 ease-in-out">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
           <p className="text-gray-500 text-lg">Manage your profile and preferences</p>
@@ -61,7 +61,7 @@ export default function ProfilePage() {
         {isEditing ? (
           // Editable form
           <form className="space-y-6">
-            <div className="flex flex-col md:flex-row space-x-4">
+            <div className="flex flex-col justify-center space-y-4 md:flex-row md:space-x-4 md:space-y-0">
               <div className="flex-1">
                 <label className="block font-semibold text-gray-700">Username</label>
                 <input
@@ -95,7 +95,7 @@ export default function ProfilePage() {
                 />
               </div>
 
-              <div className="flex flex-col md:flex-row space-x-4">
+              <div className="flex flex-col md:flex-row space-y-4 md:space-x-4 md:space-y-0">
                 <div className="flex-1">
                   <label htmlFor="gender" className="block font-semibold text-gray-700">Gender</label>
                   <select
@@ -173,17 +173,17 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-4">
               <i className="fas fa-user text-blue-600"></i>
               <div>
-                <p className="text-lg font-semibold text-gray-700">Username</p>
+                <p className="text-lg font-bold text-gray-700">Username</p>
                 <p className="text-lg text-gray-600">{user.username}</p>
               </div>
             </div>
           </div>
         
           <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4">
+            <div className="flex items-center space-x-4 ">
               <i className="fas fa-envelope text-blue-600"></i>
               <div>
-                <p className="text-lg font-semibold text-gray-700">Email</p>
+                <p className="text-lg font-bold text-gray-700">Email</p>
                 <p className="text-lg text-gray-600">{user.email}</p>
               </div>
             </div>
@@ -193,7 +193,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-4">
               <i className="fas fa-info-circle text-blue-600"></i>
               <div>
-                <p className="text-lg font-semibold text-gray-700">Bio</p>
+                <p className="text-lg font-bold text-gray-700">Bio</p>
                 <p className="text-lg text-gray-600">{user.bio || 'N/A'}</p>
               </div>
             </div>
@@ -203,7 +203,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-4">
               <i className="fas fa-genderless text-blue-600"></i>
               <div>
-                <p className="text-lg font-semibold text-gray-700">Gender</p>
+                <p className="text-lg font-bold text-gray-700">Gender</p>
                 <p className="text-lg text-gray-600">{user.gender}</p>
               </div>
             </div>
@@ -213,7 +213,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-4">
               <i className="fas fa-user-tag text-blue-600"></i>
               <div>
-                <p className="text-lg font-semibold text-gray-700">Role</p>
+                <p className="text-lg font-bold text-gray-700">Role</p>
                 <p className="text-lg text-gray-600">{user.role}</p>
               </div>
             </div>
@@ -223,7 +223,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-4">
               <i className="fas fa-tools text-blue-600"></i>
               <div>
-                <p className="text-lg font-semibold text-gray-700">Skills</p>
+                <p className="text-lg font-bold text-gray-700">Skills</p>
                 <p className="text-lg text-gray-600">{user.skills.length ? user.skills.join(', ') : 'N/A'}</p>
               </div>
             </div>
@@ -233,7 +233,7 @@ export default function ProfilePage() {
             <div className="flex items-center space-x-4">
               <i className="fas fa-heart text-blue-600"></i>
               <div>
-                <p className="text-lg font-semibold text-gray-700">Interests</p>
+                <p className="text-lg font-bold text-gray-700">Interests</p>
                 <p className="text-lg text-gray-600">{user.interests.length ? user.interests.join(', ') : 'N/A'}</p>
               </div>
             </div>

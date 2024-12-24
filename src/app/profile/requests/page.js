@@ -7,14 +7,13 @@ export default function ManageRequestsPage() {
   const [requests, setRequests] = useState([]);
   const [status, setStatus] = useState("");
   const [loggedInUserId, setLoggedInUserId] = useState(null);
-  // console.log("_____________>")
+
   // Fetch logged-in user ID
   useEffect(() => {
     const fetchLoggedInUserId = async () => {
       try {
         const response = await axios.get("/api/users", { withCredentials: true });
-        // console.log("_____________>",response)
-        setLoggedInUserId(response.data.userId); // Assuming `userId` is returned
+        setLoggedInUserId(response.data.userId);
       } catch (error) {
         console.error("Error fetching logged-in user ID:", error.response?.data?.message || error.message);
       }
@@ -55,35 +54,38 @@ export default function ManageRequestsPage() {
   };
 
   return (
-    <div className="max-w-2xl mx-auto p-4">
-      <h1 className="text-2xl font-bold mb-4">Manage Requests</h1>
+    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
+      <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Manage Requests</h1>
 
-      {status && <p className="text-sm mb-4">{status}</p>}
+      {status && <p className="text-sm mb-4 text-center text-gray-700">{status}</p>}
 
       {requests.length > 0 ? (
         <ul>
           {requests.map((user) => (
-            <li key={user._id} className="mb-4 border-b pb-4">
-              <p>
-                <strong>{user.username}</strong> ({user.email})
-              </p>
-              <button
-                onClick={() => handleRequestAction(user._id, "accept")}
-                className="mr-2 px-4 py-2 bg-green-500 text-white rounded hover:bg-green-600"
-              >
-                Accept
-              </button>
-              <button
-                onClick={() => handleRequestAction(user._id, "reject")}
-                className="px-4 py-2 bg-red-500 text-white rounded hover:bg-red-600"
-              >
-                Reject
-              </button>
+            <li key={user._id} className="flex flex-col sm:flex-row  items-center justify-between bg-gray-100 p-4 mb-4 rounded-lg hover:shadow-md transition-all">
+              <div>
+                <p className="font-semibold text-lg text-gray-800">{user.username}</p>
+                <p className="text-gray-600">{user.email}</p>
+              </div>
+              <div className="flex space-x-4 mt-4 ms:mt-0 gap-8">
+                <button
+                  onClick={() => handleRequestAction(user._id, "accept")}
+                  className="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600 transition-all"
+                >
+                  Accept
+                </button>
+                <button
+                  onClick={() => handleRequestAction(user._id, "reject")}
+                  className="px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 transition-all"
+                >
+                  Reject
+                </button>
+              </div>
             </li>
           ))}
         </ul>
       ) : (
-        <p>No pending requests.</p>
+        <p className="text-center text-gray-600">No pending requests.</p>
       )}
     </div>
   );
