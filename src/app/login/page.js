@@ -28,7 +28,7 @@ export default function LoginPage() {
       );
 
       // Redirect to the profile page after successful login
-      router.push("/profile");
+      router.push("/");
       toast.success("Login successful!");
     } catch (error) {
       const errorMessage = error.response?.data?.error || "Login failed. Please try again.";
