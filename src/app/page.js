@@ -50,13 +50,13 @@ export default function Home() {
           <h2 className="text-3xl font-semibold text-indigo-600 mb-6">What Our Users Say</h2>
           <div className="space-y-8">
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <p className="text-lg text-gray-600 italic">"This platform has completely changed the way I network and collaborate with other professionals."</p>
-              <p className="mt-4 font-semibold text-indigo-600">John Doe</p>
+              <p className="text-lg text-gray-600 italic">&quot;This platform has completely changed the way I network and collaborate with other professionals.&quot;</p>
+              <p className="mt-4 font-semibold text-indigo-600">Saurabh</p>
               <p className="text-gray-500">Software Engineer</p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-lg">
-              <p className="text-lg text-gray-600 italic">"I’ve connected with so many amazing people, and the recommendations are spot on!"</p>
-              <p className="mt-4 font-semibold text-indigo-600">Jane Smith</p>
+              <p className="text-lg text-gray-600 italic">&quot;I&apos;ve connected with so many amazing people, and the recommendations are spot on!&quot;</p>
+              <p className="mt-4 font-semibold text-indigo-600">Vishakha</p>
               <p className="text-gray-500">Product Manager</p>
             </div>
           </div>

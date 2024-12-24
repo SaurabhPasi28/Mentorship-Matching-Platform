@@ -42,7 +42,7 @@ export default function UserProfilePage({ params }) {
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 py-12 px-4">
       <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8 space-y-6">
         <div className="text-center">
-          <h1 className="text-3xl font-semibold text-gray-900">{user.username}'s Profile</h1>
+          <h1 className="text-3xl font-semibold text-gray-900">{user.username}&apos;s Profile</h1>
           <p className="text-xl text-gray-600">{user.role}</p>
         </div>
 
