@@ -110,8 +110,8 @@ export default function LoginPage() {
       setLoading(true);
       // Include credentials for cookie handling
       const response = await axios.post("/api/users/login", formData, { withCredentials: true });
-      toast.success("Login successful!");
       router.push("/profile"); // Redirect to profile page
+      toast.success("Login successful!");
     } catch (error) {
       const errorMessage = error.response?.data?.error || "Login failed. Please try again.";
       toast.error(errorMessage);
