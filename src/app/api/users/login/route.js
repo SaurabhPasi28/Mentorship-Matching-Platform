@@ -48,15 +48,15 @@ export async function POST(request) {
       tokenExpiry: "24 hours",
     });
 
-    // response.cookies.set("token", token, {
-    //   httpOnly: true,
-    //   secure: true,
-    //   sameSite: "strict",
-    // });
-    response.headers.set(
-      "Set-Cookie",
-      `token=${token}; Path=/; Max-Age=86400`
-    );
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      secure: true,
+      sameSite: "strict",
+    });
+    // response.headers.set(
+    //   "Set-Cookie",
+    //   `token=${token}; Path=/; Max-Age=86400`
+    // );
 
     return response;
   } catch (error) {

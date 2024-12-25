@@ -14,8 +14,10 @@ export async function POST(req, { params }) {
     }
 
     if (loggedInUserId === userId) {
+      console.log("same userr------>")
       return new Response(JSON.stringify({ message: "Cannot send request to yourself" }), { status: 400 });
     }
+    console.log("same userr------>")
 
     const user = await User.findById(userId);
     if (!user) {

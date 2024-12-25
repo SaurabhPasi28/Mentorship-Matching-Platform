@@ -46,8 +46,7 @@ export default function Header() {
 
     fetchRequests();
   }, [loggedInUserId]);
-  console.log("header loaded----------->");
-
+  // console.log("header loaded----------->");
   // Update notification count whenever requests change
   useEffect(() => {
     setNotificationCount(requests.length);
