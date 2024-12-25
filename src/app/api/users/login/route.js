@@ -55,7 +55,7 @@ export async function POST(request) {
     // });
     response.headers.set(
       "Set-Cookie",
-      `token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=86400`
+      `token=${token}; Path=/; Max-Age=86400`
     );
 
     return response;

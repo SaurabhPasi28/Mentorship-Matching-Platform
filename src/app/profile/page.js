@@ -4,6 +4,8 @@ import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import axios from 'axios';
 import Loading from '@/app/loading';
+import { FaUser, FaEnvelope, FaInfoCircle, FaGenderless, FaUserTag, FaTools, FaHeart } from 'react-icons/fa';
+import DetailCard from "@/app/components/DetailCard"
 
 export default function ProfilePage() {
   const [user, setUser] = useState(null);
@@ -54,14 +56,14 @@ export default function ProfilePage() {
   return (
     <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center p-4 md:p-6">
       <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-xl transform transition-all duration-500 ease-in-out">
-        <div className="text-center mb-8">
-          <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
-          <p className="text-gray-500 text-lg">Manage your profile and preferences</p>
-        </div>
 
         {isEditing ? (
           // Editable form
           <form className="space-y-6">
+        <div className="text-center mb-8">
+          <h1 className="text-3xl font-bold text-gray-900">Profile</h1>
+          <p className="text-gray-500 text-lg">Manage your profile and preferences</p>
+        </div>
             <div className="flex flex-col justify-center space-y-4 md:flex-row md:space-x-4 md:space-y-0">
               <div className="flex-1">
                 <label className="block font-semibold text-gray-700">Username</label>
@@ -169,86 +171,57 @@ export default function ProfilePage() {
           </form>
         ) : (
           // View profile
-          <div className="space-y-6">
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4">
-              <i className="fas fa-user text-blue-600"></i>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Username</p>
-                <p className="text-lg text-gray-600">{user.username}</p>
-              </div>
-            </div>
-          </div>
-        
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4 ">
-              <i className="fas fa-envelope text-blue-600"></i>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Email</p>
-                <p className="text-lg text-gray-600">{user.email}</p>
-              </div>
-            </div>
-          </div>
-        
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4">
-              <i className="fas fa-info-circle text-blue-600"></i>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Bio</p>
-                <p className="text-lg text-gray-600">{user.bio || 'N/A'}</p>
-              </div>
-            </div>
-          </div>
-        
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4">
-              <i className="fas fa-genderless text-blue-600"></i>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Gender</p>
-                <p className="text-lg text-gray-600">{user.gender}</p>
-              </div>
-            </div>
-          </div>
-        
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4">
-              <i className="fas fa-user-tag text-blue-600"></i>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Role</p>
-                <p className="text-lg text-gray-600">{user.role}</p>
-              </div>
-            </div>
-          </div>
-        
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4">
-              <i className="fas fa-tools text-blue-600"></i>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Skills</p>
-                <p className="text-lg text-gray-600">{user.skills.length ? user.skills.join(', ') : 'N/A'}</p>
-              </div>
-            </div>
-          </div>
-        
-          <div className="bg-gray-50 p-6 rounded-lg shadow-md hover:shadow-xl transition duration-300 ease-in-out">
-            <div className="flex items-center space-x-4">
-              <i className="fas fa-heart text-blue-600"></i>
-              <div>
-                <p className="text-lg font-bold text-gray-700">Interests</p>
-                <p className="text-lg text-gray-600">{user.interests.length ? user.interests.join(', ') : 'N/A'}</p>
-              </div>
-            </div>
-          </div>
-        
-          <div className="mt-8">
-            <button
-              onClick={() => setIsEditing(true)}
-              className="px-6 py-3 bg-blue-600 text-white rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
-            >
-              Edit Profile
-            </button>
-          </div>
+          <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-100 to-blue-50 p-6">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8 space-y-6">
+        {/* Header */}
+        <div className="text-center">
+          <h1 className="text-3xl font-bold text-gray-900">Profile Details</h1>
+          <p className="text-lg text-gray-600">Manage your profile information</p>
         </div>
+
+        {/* Profile Details */}
+        <div className="space-y-6">
+          {/* Username */}
+          <DetailCard icon={<FaUser className="text-blue-500 text-3xl" />} title="Username" value={user.username} />
+
+          {/* Email */}
+          <DetailCard icon={<FaEnvelope className="text-green-500 text-3xl" />} title="Email" value={user.email} />
+
+          {/* Bio */}
+          <DetailCard icon={<FaInfoCircle className="text-yellow-500 text-3xl" />} title="Bio" value={user.bio || 'N/A'} />
+
+          {/* Gender */}
+          <DetailCard icon={<FaGenderless className="text-pink-500 text-3xl" />} title="Gender" value={user.gender} />
+
+          {/* Role */}
+          <DetailCard icon={<FaUserTag className="text-purple-500 text-3xl" />} title="Role" value={user.role} />
+
+          {/* Skills */}
+          <DetailCard
+            icon={<FaTools className="text-teal-500 text-3xl" />}
+            title="Skills"
+            value={user.skills.length ? user.skills.join(', ') : 'N/A'}
+          />
+
+          {/* Interests */}
+          <DetailCard
+            icon={<FaHeart className="text-red-500 text-3xl" />}
+            title="Interests"
+            value={user.interests.length ? user.interests.join(', ') : 'N/A'}
+          />
+        </div>
+
+        {/* Edit Button */}
+        <div className="text-center">
+          <button
+            onClick={() => setIsEditing(true)}
+            className="px-6 py-3 bg-blue-600 text-white font-semibold rounded-lg shadow-md hover:bg-blue-700 hover:shadow-lg transition duration-300 transform hover:scale-105"
+          >
+            Edit Profile
+          </button>
+        </div>
+      </div>
+    </div>
         
         )}
       </div>

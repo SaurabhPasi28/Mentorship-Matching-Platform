@@ -20,7 +20,8 @@ export default function LogoutPage() {
         }
       } catch (error) {
         toast.error(error.message || 'An error occurred during logout');
-        router.push('/login'); // Redirect to login page even on error
+        router.push('/'); 
+        window.location.reload();// Redirect to login page even on error
       }
     };
 

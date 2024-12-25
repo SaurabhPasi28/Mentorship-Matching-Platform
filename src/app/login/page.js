@@ -30,9 +30,10 @@ export default function LoginPage() {
       // Redirect to the profile page after successful login
       toast.success("Login successful!");
       // router.push("/");
-      router.push("/").then(() => {
-        router.reload();
-      });
+      if (response.data.success) {
+        await router.push("/"); // Navigate to the home page
+        window.location.reload(); // Refresh the page to ensure cookies are read
+      }
       
     } catch (error) {
       const errorMessage = error.response?.data?.error || "Login failed. Please try again.";

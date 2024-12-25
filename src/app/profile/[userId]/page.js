@@ -28,8 +28,8 @@ export default function UserProfilePage({ params }) {
 
   if (loading) {
     return (
-      <div className="flex justify-center items-center min-h-screen">
-        <div className="animate-pulse bg-gray-300 h-12 w-48 rounded"></div>
+      <div className="flex justify-center items-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100">
+        <div className="animate-pulse bg-blue-300 h-12 w-48 rounded-full"></div>
       </div>
     );
   }
@@ -39,38 +39,44 @@ export default function UserProfilePage({ params }) {
   }
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50 py-12 px-4">
-      <div className="max-w-4xl w-full bg-white rounded-lg shadow-lg p-8 space-y-6">
-        <div className="text-center">
-          <h1 className="text-3xl font-semibold text-gray-900">{user.username}&apos;s Profile</h1>
-          <p className="text-xl text-gray-600">{user.role}</p>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gradient-to-br from-blue-50 to-indigo-100 p-6">
+      <div className="max-w-4xl w-full bg-white rounded-lg shadow-xl transition transform hover:scale-105 duration-300 ease-in-out p-8 space-y-8">
+        {/* Profile Header */}
+        <div className="flex flex-col items-center space-y-4">
+          <img
+            src={user.profilePicture || '/default-avatar.png'}
+            alt="Profile Picture"
+            className="w-32 h-32 rounded-full shadow-lg ring-4 ring-indigo-300"
+          />
+          <h1 className="text-3xl font-bold text-gray-900">{user.username}</h1>
+          <p className="text-lg font-medium text-gray-600 capitalize">{user.role}</p>
         </div>
 
         {/* Profile Details */}
-        <div className="space-y-4">
-          <div className="flex justify-between">
-            <p className="font-semibold text-gray-700">Username:</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-gray-700">
+          <div className="p-4 bg-blue-50 rounded-lg shadow-md hover:bg-blue-100 transition duration-300">
+            <p className="font-semibold">Username</p>
             <p className="text-gray-600">{user.username}</p>
           </div>
-          <div className="flex justify-between">
-            <p className="font-semibold text-gray-700">Email:</p>
+          <div className="p-4 bg-blue-50 rounded-lg shadow-md hover:bg-blue-100 transition duration-300">
+            <p className="font-semibold">Email</p>
             <p className="text-gray-600">{user.email}</p>
           </div>
-          <div className="flex justify-between">
-            <p className="font-semibold text-gray-700">About:</p>
+          <div className="p-4 bg-blue-50 rounded-lg shadow-md hover:bg-blue-100 transition duration-300">
+            <p className="font-semibold">About</p>
             <p className="text-gray-600">{user.about || 'No information provided'}</p>
           </div>
-          <div className="flex justify-between">
-            <p className="font-semibold text-gray-700">Skills:</p>
+          <div className="p-4 bg-blue-50 rounded-lg shadow-md hover:bg-blue-100 transition duration-300">
+            <p className="font-semibold">Skills</p>
             <p className="text-gray-600">{user.skills.length ? user.skills.join(', ') : 'No skills added'}</p>
           </div>
-          <div className="flex justify-between">
-            <p className="font-semibold text-gray-700">Interests:</p>
+          <div className="p-4 bg-blue-50 rounded-lg shadow-md hover:bg-blue-100 transition duration-300">
+            <p className="font-semibold">Interests</p>
             <p className="text-gray-600">{user.interests.length ? user.interests.join(', ') : 'No interests added'}</p>
           </div>
-          <div className="flex justify-between">
-            <p className="font-semibold text-gray-700">Gender:</p>
-            <p className="text-gray-600">{user.gender}</p>
+          <div className="p-4 bg-blue-50 rounded-lg shadow-md hover:bg-blue-100 transition duration-300">
+            <p className="font-semibold">Gender</p>
+            <p className="text-gray-600 capitalize">{user.gender}</p>
           </div>
         </div>
 
@@ -78,7 +84,7 @@ export default function UserProfilePage({ params }) {
         <div className="flex justify-center">
           <button
             onClick={() => router.back()}
-            className="bg-blue-600 text-white py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 ease-in-out transform hover:scale-105"
+            className="bg-indigo-600 text-white py-2 px-6 rounded-full shadow-lg hover:bg-indigo-700 hover:shadow-xl transition duration-300 ease-in-out transform hover:scale-105"
           >
             Go Back
           </button>
