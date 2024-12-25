@@ -25,7 +25,7 @@ export async function POST(request) {
     // Validate password
     const validPassword = await bcryptjs.compare(password, user.password);
     if (!validPassword) {
-      return NextResponse.json({ success: false, error: "Invalid credentials" }, { status: 400 });
+      return NextResponse.json({ success: false, error: "Wrong Password" }, { status: 400 });
     }
 
     // Generate JWT
@@ -35,8 +35,8 @@ export async function POST(request) {
 
     const tokenData = {
       id: user._id,
-      // username: user.username,
-      // email: user.email,
+      username: user.username,
+      email: user.email,
     };
 
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: "1d" });
