@@ -11,10 +11,10 @@ export default function SendRequestButton({ targetUserId }) {
       const response = await axios.post(`/api/users/${targetUserId}/request`, {}, {
         withCredentials: true, // Include cookies for authentication
       });
-      setStatus("Request sent successfully!");
+      setStatus("Request sent successfully");
     } catch (error) {
       console.error("Error sending request:", error.response?.data?.message || error.message);
-      setStatus("Failed to send request.");
+      setStatus(error.response.data.message );
     }
   };
 

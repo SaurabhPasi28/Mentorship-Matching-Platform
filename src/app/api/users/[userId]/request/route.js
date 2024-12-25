@@ -2,7 +2,6 @@ import User from "@/models/userModel";
 import { dbconnect } from "@/dbConfig/dbconnect";
 import { getDataFromToken } from "@/utils/getDataFromToken";
 
-
 export async function POST(req, { params }) {
   try {
     await dbconnect();
@@ -14,10 +13,8 @@ export async function POST(req, { params }) {
     }
 
     if (loggedInUserId === userId) {
-      console.log("same userr------>")
       return new Response(JSON.stringify({ message: "Cannot send request to yourself" }), { status: 400 });
     }
-    console.log("same userr------>")
 
     const user = await User.findById(userId);
     if (!user) {
@@ -28,7 +25,7 @@ export async function POST(req, { params }) {
       return new Response(JSON.stringify({ message: "Request already sent" }), { status: 400 });
     }
 
-    if (user.connections.includes(loggedInUserId)) {
+    if (user.connected.includes(loggedInUserId)) {
       return new Response(JSON.stringify({ message: "Already connected" }), { status: 400 });
     }
 
