@@ -28,8 +28,12 @@ export default function LoginPage() {
       );
 
       // Redirect to the profile page after successful login
-      router.push("/");
       toast.success("Login successful!");
+      // router.push("/");
+      router.push("/").then(() => {
+        router.reload();
+      });
+      
     } catch (error) {
       const errorMessage = error.response?.data?.error || "Login failed. Please try again.";
       console.error("Login Error: ", error.response || error.message);

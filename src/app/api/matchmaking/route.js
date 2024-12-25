@@ -19,7 +19,7 @@ export async function GET(request) {
         
         // Extract the logged-in user's data
         const currentUser = await User.findById(userId);
-        console.log("-------------->11111",currentUser);
+        // console.log("-------------->11111",currentUser);
 
     if (!currentUser) {
       return NextResponse.json(

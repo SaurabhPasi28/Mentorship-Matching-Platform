@@ -26,7 +26,7 @@ export default function Header() {
     };
 
     fetchLoggedInUserId();
-  }, []);
+  });
 
   // Fetch requests and update notification count
   useEffect(() => {

@@ -35,8 +35,8 @@ export async function POST(request) {
 
     const tokenData = {
       id: user._id,
-      username: user.username,
-      email: user.email,
+      // username: user.username,
+      // email: user.email,
     };
 
     const token = jwt.sign(tokenData, process.env.JWT_SECRET, { expiresIn: "1d" });
@@ -48,11 +48,15 @@ export async function POST(request) {
       tokenExpiry: "24 hours",
     });
 
-    response.cookies.set("token", token, {
-      httpOnly: true,
-      secure: true,
-      sameSite: "strict",
-    });
+    // response.cookies.set("token", token, {
+    //   httpOnly: true,
+    //   secure: true,
+    //   sameSite: "strict",
+    // });
+    response.headers.set(
+      "Set-Cookie",
+      `token=${token}; HttpOnly; Secure; SameSite=Strict; Path=/; Max-Age=86400`
+    );
 
     return response;
   } catch (error) {
