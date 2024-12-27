@@ -15,7 +15,6 @@ export default function DiscoverPage() {
     // Function to fetch users with applied filters
     const fetchUsers = async () => {
         try {
-            setLoading(true);
             const { role, skills, interests } = filters;
             const query = new URLSearchParams({
                 ...(role && { role }),

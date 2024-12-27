@@ -1,10 +1,11 @@
 import Link from "next/link";
+// import CloudinaryUpload from "./components/CloudinaryUpload";
 
 export default function Home() {
   return (
     <div className="bg-gray-100 min-h-screen">
       {/* Header Section */}
-
+      {/* <CloudinaryUpload/> */}
       {/* Hero Section */}
       <section className="bg-indigo-600 text-white py-20 text-center">
         <h1 className="text-4xl font-bold mb-4">Welcome to Our Platform</h1>

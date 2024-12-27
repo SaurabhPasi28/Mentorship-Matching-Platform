@@ -1,43 +1,61 @@
-import React, { useState } from 'react';
-import { CldUploadWidget } from 'next-cloudinary';
-import axios from 'axios';
+// "use client";
 
-const CloudinaryUpload = () => {
-  const [publicId, setPublicId] = useState("");
+// import React, { useState } from "react";
+// import axios from "axios";
 
-  const handleUploadSuccess = async ({ event, info }) => {
-    if (event === "success") {
-      console.log("Cloudinary public_id:------------->", info.public_id);
-      setPublicId(info.public_id);
+// const UploadPage = () => {
+//   const [image, setImage] = useState(null);
+//   const [status, setStatus] = useState("");
 
-      // Send the public_id to your backend to save it in MongoDB
-      try {
-        const response = await axios.put('/api/users/profile', {
-          profilePicture: info.public_id,
-        });
+//   const onChangeHandler = (e) => {
+//     setImage(e.target.files[0]);
+//   };
 
-        if (response.status === 200) {
-          alert('Profile image updated successfully!');
-        }
-      } catch (error) {
-        console.error('Error saving public_id to backend:', error);
-        alert('Failed to update profile image.');
-      }
-    }
-  };
+//   const onSubmitHandler = async (e) => {
+//     e.preventDefault();
 
-  return (
-    <CldUploadWidget
-      uploadPreset="hcnfq5ko"
-      onSuccess={handleUploadSuccess}
-    >
-      {({ open }) => (
-        <button onClick={() => open()}>
-          Upload an Image
-        </button>
-      )}
-    </CldUploadWidget>
-  );
-};
+//     if (!image) {
+//       setStatus("Please select an image before uploading.");
+//       return;
+//     }
 
-export default CloudinaryUpload;
+//     const formData = new FormData();
+//     formData.append("image", image);
+
+//     try {
+//       const response = await axios.post("/api/uploadprofile", formData, {
+//         headers: {
+//           "Content-Type": "multipart/form-data",
+//         },
+//       });
+
+//       setStatus(response.data.message || "Image uploaded successfully!");
+//       console.log("Response:", response.data);
+//     } catch (error) {
+//       console.error("Error uploading file:", error.message);
+//       setStatus("Failed to upload image.");
+//     }
+//   };
+
+//   return (
+//     <div className="p-4">
+//       <form onSubmit={onSubmitHandler} className="space-y-4">
+//         <input
+//           type="file"
+//           accept="image/*"
+//           onChange={onChangeHandler}
+//           className="border border-gray-300 p-2 rounded"
+//         />
+//         <button
+//           type="submit"
+//           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+//         >
+//           Upload
+//         </button>
+//       </form>
+//       {status && <p className="mt-2">{status}</p>}
+//     </div>
+//   );
+// };
+
+// export default UploadPage;
