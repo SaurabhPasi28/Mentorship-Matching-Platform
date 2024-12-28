@@ -1,20 +1,25 @@
-// import cloudinary from "cloudinary";
+import { v2 as cloudinary } from "cloudinary";
 
-// cloudinary.config({
-//   cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
-//   api_key: process.env.CLOUDINARY_API_KEY,
-//   api_secret: process.env.CLOUDINARY_API_SECRET,
-// });
+cloudinary.config({
+  cloud_name: process.env.CLOUDINARY_CLOUD_NAME,
+  api_key: process.env.CLOUDINARY_API_KEY,
+  api_secret: process.env.CLOUDINARY_API_SECRET,
+});
 
-// export const uploadToCloudinary = (filePath, folder) => {
-//   return new Promise((resolve, reject) => {
-//     cloudinary.v2.uploader.upload(
-//       filePath,
-//       { folder },
-//       (error, result) => {
-//         if (error) reject(error);
-//         else resolve(result);
-//       }
-//     );
-//   });
-// };
+console.log("working till here>>>>>>>>>>10")
+
+export const uploadToCloudinary = (fileUri, fileName) => {
+  console.log("working till here>>>>>>>>>>12")
+  return new Promise((resolve, reject) => {
+    cloudinary.uploader
+      .upload(fileUri, {
+        invalidate: true,
+        resource_type: "auto",
+        filename_override: fileName,
+        folder: "mentorship-profile",
+        use_filename: true,
+      })
+      .then((result) => resolve({ success: true, result }))
+      .catch((error) => reject({ success: false, error }));
+  });
+};

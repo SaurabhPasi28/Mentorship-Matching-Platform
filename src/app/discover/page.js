@@ -5,6 +5,7 @@ import Link from 'next/link';
 import axios from "axios";
 import SendRequestButton from "@/app/components/SendRequestButton"; // Import the button
 import Loading from "../loading";
+import Image from "next/image";
 
 export default function DiscoverPage() {
     const [users, setUsers] = useState([]);
@@ -52,7 +53,7 @@ export default function DiscoverPage() {
     }
 
     return (
-        <div className="p-6">
+        <div className="p-4">
             <h1 className="text-3xl font-extrabold text-center text-gradient bg-clip-text text-transparent mb-6">
                 Discover Users
             </h1>
@@ -90,40 +91,62 @@ export default function DiscoverPage() {
 
             {/* Displaying Users */}
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                {users.length > 0 ? (
-                    users.map((user) => (
-                        <div
-                            key={user._id}
-                            className="bg-white border p-6 rounded-lg shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out"
-                        >
-                            <div className="flex flex-col space-y-4">
-                                <h2 className="text-xl font-semibold text-gray-800">{user.username}</h2>
-                                <p className="text-sm text-gray-600">{user.bio || "No bio available"}</p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Role:</strong> {user.role}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Skills:</strong> {user.skills.join(", ") || "None"}
-                                </p>
-                                <p className="text-sm text-gray-600">
-                                    <strong>Interests:</strong> {user.interests.join(", ") || "None"}
-                                </p>
-                            </div>
-                            {/* Button Group */}
-                            <div className="flex justify-between items-center mt-4 space-x-4">
-                                {/* View Profile button */}
-                                <Link href={`/profile/${user._id}`} className="px-4 py-2 text-white bg-blue-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
-                                    View Profile
-                                </Link>
-                                {/* Send Request Button */}
-                                <SendRequestButton targetUserId={user._id} />
-                            </div>
-                        </div>
-                    ))
-                ) : (
-                    <p className="text-center text-lg text-gray-600">No users found</p>
-                )}
-            </div>
+  {users.length > 0 ? (
+    users.map((user) => (
+      <div
+        key={user._id}
+        className="bg-white border p-2 rounded-lg shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out"
+      >
+       <div className="flex flex-col sm:flex-row bg-white border p-6 rounded-lg shadow-xl hover:shadow-2xl transform transition-all duration-300 ease-in-out">
+  {/* Image Section - Left Side */}
+  <div className="flex-shrink-0 relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 overflow-hidden rounded-md">
+    <Image
+      src={user.profilePicture || "/path/to/default-image.jpg"} // Fallback to default image
+      alt="User Profile Picture"
+      layout="fill"
+      objectFit="cover" // Ensures the image is cropped to fit
+      className="rounded-md"
+    />
+  </div>
+
+  {/* Details Section - Right Side */}
+  <div className="flex flex-col flex-grow sm:ml-6 mt-4 sm:mt-0">
+    <h2 className="text-lg sm:text-xl font-semibold text-gray-800">{user.username}</h2>
+    <p className="text-sm sm:text-base text-gray-600 mt-1">{user.bio || "No bio available"}</p>
+
+    <div className="mt-3 text-sm sm:text-base text-gray-600 space-y-1">
+      <p>
+        <strong>Role:</strong> {user.role}
+      </p>
+      <p>
+        <strong>Skills:</strong> {user.skills.join(", ") || "None"}
+      </p>
+      <p>
+        <strong>Interests:</strong> {user.interests.join(", ") || "None"}
+      </p>
+    </div>
+
+    {/* Button Group */}
+    <div className="mt-4 flex space-x-4">
+      <Link
+        href={`/profile/${user._id}`}
+        className="px-4 py-2 text-white bg-blue-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
+      >
+        View Profile
+      </Link>
+      <SendRequestButton targetUserId={user._id} />
+    </div>
+  </div>
+</div>
+
+      </div>
+    ))
+  ) : (
+    <p className="text-center text-lg text-gray-600">No users found</p>
+  )}
+</div>
+
+
         </div>
     );
 }

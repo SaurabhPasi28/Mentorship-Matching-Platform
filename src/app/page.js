@@ -1,5 +1,5 @@
 import Link from "next/link";
-// import CloudinaryUpload from "./components/CloudinaryUpload";
+import CloudinaryUpload from "./components/CloudinaryUpload";
 
 export default function Home() {
   return (

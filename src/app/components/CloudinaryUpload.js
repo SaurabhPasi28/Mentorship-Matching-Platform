@@ -1,61 +1,76 @@
-// "use client";
+"use client"
+import { useState } from "react";
 
-// import React, { useState } from "react";
-// import axios from "axios";
+const ImageUploader = () => {
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [imageUrl, setImageUrl] = useState("");
 
-// const UploadPage = () => {
-//   const [image, setImage] = useState(null);
-//   const [status, setStatus] = useState("");
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
 
-//   const onChangeHandler = (e) => {
-//     setImage(e.target.files[0]);
-//   };
+  const UploadImage = async (file) => {
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-//   const onSubmitHandler = async (e) => {
-//     e.preventDefault();
+      console.log("working till here>>>>>>>>>>1")
+      const response = await fetch("/api/upload", {
+        method: "POST",
+        body: formData,
+      });
+      // console.log("working till here>>>>>>>>>>2")
+      const data = await response.json();
+  
+      if (data.message === "success") {
+        console.log("Uploaded Image URL:", data.imgUrl);
+        return data.imgUrl;
+      } else {
+        console.error("Upload Failed:---->", data.error || data.message);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  };
 
-//     if (!image) {
-//       setStatus("Please select an image before uploading.");
-//       return;
-//     }
+  const handleUpload = async (e) => {
+    e.preventDefault();
+    if (selectedFile) {
+      const url = await UploadImage(selectedFile);
+      setImageUrl(url);
+    }
+  };
 
-//     const formData = new FormData();
-//     formData.append("image", image);
+  return (
+    <div className="flex flex-col items-center w-full">
+    {/* Custom file input label */}
+    <label
+      htmlFor="file-upload"
+      className="cursor-pointer bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition-colors duration-200"
+    >
+      Choose Image
+    </label>
 
-//     try {
-//       const response = await axios.post("/api/uploadprofile", formData, {
-//         headers: {
-//           "Content-Type": "multipart/form-data",
-//         },
-//       });
+    {/* Hidden file input */}
+    <input
+      id="file-upload"
+      type="file"
+      onChange={handleFileChange}
+      className="hidden"
+    />
 
-//       setStatus(response.data.message || "Image uploaded successfully!");
-//       console.log("Response:", response.data);
-//     } catch (error) {
-//       console.error("Error uploading file:", error.message);
-//       setStatus("Failed to upload image.");
-//     }
-//   };
+    {/* Upload button */}
+    <button
+      onClick={handleUpload}
+      className="mt-4 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition-colors duration-200"
+    >
+      Upload
+    </button>
 
-//   return (
-//     <div className="p-4">
-//       <form onSubmit={onSubmitHandler} className="space-y-4">
-//         <input
-//           type="file"
-//           accept="image/*"
-//           onChange={onChangeHandler}
-//           className="border border-gray-300 p-2 rounded"
-//         />
-//         <button
-//           type="submit"
-//           className="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-//         >
-//           Upload
-//         </button>
-//       </form>
-//       {status && <p className="mt-2">{status}</p>}
-//     </div>
-//   );
-// };
+    {/* Display uploaded image */}
+    {imageUrl && <img src={imageUrl} alt="Uploaded" className="mt-4 max-w-full rounded-lg shadow-md" />}
+  </div>
+  );
+};
 
-// export default UploadPage;
+export default ImageUploader;
