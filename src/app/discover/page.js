@@ -101,10 +101,10 @@ export default function DiscoverPage() {
   {/* Image Section - Left Side */}
   <div className="flex-shrink-0 relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 overflow-hidden rounded-md">
     <Image
-      src={user.profilePicture || "/path/to/default-image.jpg"} // Fallback to default image
+      src={user.profilePicture || "/default-image.png"} // Fallback to default image
       alt="User Profile Picture"
       layout="fill"
-      objectFit="cover" // Ensures the image is cropped to fit
+      objectFit="cover"
       className="rounded-md"
     />
   </div>

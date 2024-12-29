@@ -29,6 +29,7 @@ export default function ConnectionsPage() {
     const fetchConnections = async () => {
       try {
         const response = await axios.get(`/api/users/${loggedInUserId}/connection`, { withCredentials: true });
+        console.log(response.data);
         setConnections(response.data);
       } catch (error) {
         console.error('Error fetching connections:', error.response?.data?.message || error.message);
@@ -53,10 +54,10 @@ export default function ConnectionsPage() {
                 <div className="flex flex-col md:flex-row items-center space-x-4 ">
                   {/* User Avatar */}
                   <Image
-                    src={user.profilePicture} // Use default if no avatar is present
+                    src={user.profilePicture || "/default-image.png"} // Use default if no avatar is present
                     alt={user.username}
-                    width={100} // 16 * 4 = 64px
-                    height={100} // 16 * 4 = 64px
+                    width={200} // 16 * 4 = 64px
+                    height={200} // 16 * 4 = 64px
                    // Ensures the image is cropped to fit
                     className="rounded-full object-cover shadow-md mb-4"
                   />

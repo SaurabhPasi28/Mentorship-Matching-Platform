@@ -51,11 +51,13 @@ export async function GET(req, { params }) {
     const { userId } = await params;
 
     const loggedInUserId = getDataFromToken(req);
+    console.log(loggedInUserId)
+    console.log(userId)
     if (!loggedInUserId || loggedInUserId !== userId) {
       return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
     }
 
-    const user = await User.findById(userId).populate("connected", "username email");
+    const user = await User.findById(userId).populate("connected", "username email bio profilePicture");
     if (!user) {
       return new Response(JSON.stringify({ message: "User not found" }), { status: 404 });
     }

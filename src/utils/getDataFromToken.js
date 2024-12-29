@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import { NextResponse } from "next/server";
 
 export const getDataFromToken = (request) => {
     try {
@@ -14,9 +13,10 @@ export const getDataFromToken = (request) => {
 
         return decodedToken.id;
     } catch (error) {
-        console.error("Token verification failed:", error.message);
         if (error.name === "TokenExpiredError") {
+            console.error("Token verification failed:-", error.message);
             const url = new URL("/login", request.url);
+            // router.push("/login")
             url.searchParams.set("alert", "session_expired");
         }
 

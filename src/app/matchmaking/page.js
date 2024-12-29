@@ -6,12 +6,12 @@ import axios from "axios";
 import SendRequestButton from "@/app/components/SendRequestButton";
 import { motion } from "framer-motion";
 import Loading from "../loading";
+import Image from "next/image";
 
 export default function MatchmakingPage() {
   const [matches, setMatches] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
 
   const fetchMatches = async () => {
     try {
@@ -19,60 +19,76 @@ export default function MatchmakingPage() {
       setMatches(response.data.matches);
       setLoading(false);
     } catch (err) {
-      setError("Error fetching matches."); 
+      setError("Error fetching matches.");
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    fetchMatches(); 
+    fetchMatches();
   }, []);
 
   if (loading)
     return (
-      <p>
-        <Loading/>
-      </p>
-    ); 
+      <div className="flex justify-center items-center min-h-screen">
+        <Loading />
+      </div>
+    );
 
   if (error)
     return (
-      <p className="text-center text-lg font-semibold text-red-600">
+      <div className="text-center text-lg font-semibold text-red-600">
         {error}
-      </p>
-    ); // Show error if something went wrong
+      </div>
+    );
 
   return (
-    <div className="p-4">
-      <h1 className="text-3xl font-bold text-center mb-6 text-gray-800">
+    <div className="container mx-auto p-6">
+      <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
         Your Matches
       </h1>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         {matches && matches.length > 0 ? (
           matches.map((match) => (
-            <motion.div
+            <div
               key={match._id}
-              className="p-4 bg-white shadow-lg rounded-lg border border-gray-200 hover:shadow-2xl transition-shadow duration-300 ease-in-out"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
+              className="bg-white shadow-xl rounded-xl p-6 flex flex-col items-center transition-transform transform hover:scale-105 duration-300 ease-in-out"
             >
-              <h2 className="text-xl font-semibold text-gray-700">
+              <div className="flex gap-1">
+              <div className="relative w-32 h-32 mb-4 rounded-full overflow-hidden">
+                <Image
+                  src={match.profilePicture || "/default-image.png"}
+                  alt="User Profile Picture"
+                  layout="fill"
+                  objectFit="cover"
+                  className="rounded-full"
+                />
+              </div>
+             <div className="p-2">
+             <h2 className="text-2xl font-semibold text-gray-700 mb-2">
                 {match.username}
               </h2>
-              <p className="text-sm text-gray-500 mb-2">{match.bio || "No bio available"}</p>
-              <p className="text-sm text-gray-600 mb-4">
+              <p className="text-sm text-gray-500 mb-4">
+                {match.bio || "No bio available"}
+              </p>
+              <p className="text-sm text-gray-600 mb-2">
                 <strong>Role:</strong> {match.role.charAt(0).toUpperCase() + match.role.slice(1)}
               </p>
               <p className="text-sm text-gray-600 mb-4">
                 <strong>Skills:</strong> {match.skills.join(", ")}
               </p>
-              <div className="flex justify-between">
-              <Link href={`/profile/${match._id}`} className="px-4 py-2 text-white bg-green-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out">
-                View Profile
-              </Link>
-                  <SendRequestButton targetUserId={match._id} />
+             </div>
               </div>
-            </motion.div>
+              <div className="flex w-full justify-between">
+                <Link
+                  href={`/profile/${match._id}`}
+                  className="px-4 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300 ease-in-out"
+                >
+                  View Profile
+                </Link>
+                <SendRequestButton targetUserId={match._id} />
+              </div>
+            </div>
           ))
         ) : (
           <p className="text-center text-gray-600 col-span-full">

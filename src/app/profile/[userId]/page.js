@@ -46,7 +46,7 @@ export default function UserProfilePage({ params }) {
           <img
             src={user.profilePicture || '/default-avatar.png'}
             alt="Profile Picture"
-            className="w-32 h-32 rounded-full shadow-lg ring-4 ring-indigo-300"
+            className="w-48 h-48 rounded-full shadow-lg ring-4 ring-indigo-300"
           />
           <h1 className="text-3xl font-bold text-gray-900">{user.username}</h1>
           <p className="text-lg font-medium text-gray-600 capitalize">{user.role}</p>
