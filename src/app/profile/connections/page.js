@@ -53,14 +53,15 @@ export default function ConnectionsPage() {
               >
                 <div className="flex flex-col md:flex-row items-center space-x-4 ">
                   {/* User Avatar */}
-                  <Image
-                    src={user.profilePicture || "/default-image.png"} // Use default if no avatar is present
-                    alt={user.username}
-                    width={200} // 16 * 4 = 64px
-                    height={200} // 16 * 4 = 64px
-                   // Ensures the image is cropped to fit
-                    className="rounded-full object-cover shadow-md mb-4"
-                  />
+                  <div className="relative w-28 h-28 sm:w-32 sm:h-32 mb-4 overflow-hidden">
+                      <Image
+                        src={user.profilePicture || "/default-image.png"}
+                        alt="User Profile Picture"
+                        layout="fill"
+                        objectFit="cover"
+                        className="rounded-lg"
+                      />
+                  </div>
 
                   <div>
                     <Link href={`/profile/${user._id}`} className="text-xl font-semibold text-indigo-600 hover:underline">

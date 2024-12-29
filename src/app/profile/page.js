@@ -101,27 +101,26 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center p-4 md:p-6">
-      <div className="w-full max-w-4xl bg-white p-6 rounded-lg shadow-xl transform transition-all duration-500 ease-in-out">
+    <div className="min-h-screen bg-gradient-to-r from-purple-500 to-blue-600 flex items-center justify-center p-2 md:p-6">
+      <div className="w-full max-w-4xl bg-white p-0 sm:p-6 rounded-lg shadow-xl transform transition-all duration-500 ease-in-out">
 
         {isEditing ? (
           // Editable form
-          <form className="space-y-6">
+          <form className="space-y-6 p-2 ">
 
-
-          <div className="text-center space-y-4">
-            <Image
-              src={imageUrl||user.profilePicture}
-              alt="User Profile Picture"
-              width={300}
-              height={300}
-              className="mx-auto rounded-full shadow-md border border-gray-200 object-cover"
-            />
-
-
-          <h1 className="text-3xl mb-4 font-bold text-gray-900">{user.username}</h1>
-        </div>
+          <div className='flex flex-col items-center space-y-4'>
+            <h1 className="text-3xl mb-4 font-bold text-gray-900">{user.username}</h1>
+            <div className='relative w-48 h-48 md:w-60 md:h-60 overflow-hidden rounded-full'>
+          <Image
+            src={user.profilePicture || "/default-image.png"} // Fallback to default image
+            alt="User Profile Picture"
+            layout="fill"
+            objectFit="cover"
+            className="mx-auto rounded-full shadow-md border border-gray-200 object-cover"
+          />
+          </div>
             {/* <ImageUploader/> */}
+            <div>
             <label
               htmlFor="file-upload"
               className="cursor-pointer bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition-colors duration-200"
@@ -139,10 +138,12 @@ export default function ProfilePage() {
 
             <button
               onClick={handleUpload}
-              className="mt-4 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition-colors duration-200"
+              className="ml-2 sm:ml-16 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition-colors duration-200"
             >
               Upload
             </button>
+            </div>
+            </div>
 
             
         {/* <div className="text-center mb-8">
@@ -256,17 +257,17 @@ export default function ProfilePage() {
           </form>
         ) : (
           // View profile
-          <div className="min-h-screen bg-gradient-to-r from-blue-50 via-indigo-100 to-blue-50 p-6">
-      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-8 space-y-6">
+          <div className="min-h-screen bg-gradient-to-r rounded-lg from-blue-50 via-indigo-100 to-blue-50 p-2 sm:p-6 ">
+      <div className="max-w-3xl mx-auto bg-white rounded-lg shadow-lg p-2 sm:p-8 space-y-6">
         {/* Header */}
         <div className="w-full flex flex-col items-center space-y-4">
         <div className='relative w-48 h-48 md:w-60 md:h-60 overflow-hidden rounded-full'>
           <Image
-            src={user.profilePicture} // Fallback to default image
+            src={user.profilePicture || "/default-image.png"} // Fallback to default image
             alt="User Profile Picture"
             layout="fill"
             objectFit="cover"
-            className="rounded-full"
+            className="mx-auto rounded-full shadow-md border border-gray-200 object-cover"
           />
         </div>
           <h1 className="text-3xl mb-4 font-bold text-gray-900">{user.username}</h1>

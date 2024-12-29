@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import axios from "axios";
+import Image from "next/image";
 
 export default function ManageRequestsPage() {
   const [requests, setRequests] = useState([]);
@@ -54,7 +55,7 @@ export default function ManageRequestsPage() {
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-6 bg-white shadow-lg rounded-lg mt-6">
+    <div className="max-w-4xl mx-auto p-2 sm:p-6 bg-white shadow-lg rounded-lg mt-6">
       <h1 className="text-3xl font-semibold text-center text-gray-800 mb-6">Manage Requests</h1>
 
       {status && <p className="text-sm mb-4 text-center text-gray-700">{status}</p>}
@@ -63,9 +64,20 @@ export default function ManageRequestsPage() {
         <ul>
           {requests.map((user) => (
             <li key={user._id} className="flex flex-col sm:flex-row  items-center justify-between bg-gray-100 p-4 mb-4 rounded-lg hover:shadow-md transition-all">
-              <div>
+              <div className="sm:flex gap-2">
+                <div className="relative w-40 h-40 sm:w-32 sm:h-32 mb-4 overflow-hidden">
+                  <Image
+                    src={user.profilePicture || "/default-image.png"}
+                    alt="User Profile Picture"
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-lg"
+                  />
+                </div>
+                <div>
                 <p className="font-semibold text-lg text-gray-800">{user.username}</p>
                 <p className="text-gray-600">{user.email}</p>
+                </div>
               </div>
               <div className="flex space-x-4 mt-4 ms:mt-0 gap-8">
                 <button

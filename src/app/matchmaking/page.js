@@ -43,7 +43,7 @@ export default function MatchmakingPage() {
     );
 
   return (
-    <div className="container mx-auto p-6">
+    <div className="container mx-auto p-2 ms:p-6">
       <h1 className="text-4xl font-bold text-center mb-8 text-gray-800">
         Your Matches
       </h1>
@@ -52,23 +52,23 @@ export default function MatchmakingPage() {
           matches.map((match) => (
             <div
               key={match._id}
-              className="bg-white shadow-xl rounded-xl p-6 flex flex-col items-center transition-transform transform hover:scale-105 duration-300 ease-in-out"
+              className="bg-gray-200 shadow-xl rounded-xl p-2 sm:p-6 flex flex-col items-center transition-transform transform hover:scale-105 duration-300 ease-in-out"
             >
-              <div className="flex gap-1">
-              <div className="relative w-32 h-32 mb-4 rounded-full overflow-hidden">
+              <div className="flex w-full ">
+              <div className="relative w-28 h-28 sm:w-32 sm:h-32 mb-4 overflow-hidden">
                 <Image
                   src={match.profilePicture || "/default-image.png"}
                   alt="User Profile Picture"
                   layout="fill"
                   objectFit="cover"
-                  className="rounded-full"
+                  className="rounded-lg"
                 />
               </div>
-             <div className="p-2">
+             <div className="px-2">
              <h2 className="text-2xl font-semibold text-gray-700 mb-2">
                 {match.username}
               </h2>
-              <p className="text-sm text-gray-500 mb-4">
+              <p className="text-sm text-gray-500 mb-2">
                 {match.bio || "No bio available"}
               </p>
               <p className="text-sm text-gray-600 mb-2">
