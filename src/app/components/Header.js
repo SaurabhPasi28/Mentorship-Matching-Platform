@@ -1,7 +1,5 @@
-"use client";
-
+'use client';
 import Link from "next/link";
-import Image from "next/image";
 import { useState, useEffect } from "react";
 import axios from "axios";
 
@@ -9,7 +7,7 @@ export default function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
   const [notificationCount, setNotificationCount] = useState(0);
   const [loggedInUserId, setLoggedInUserId] = useState(null);
-  const [requests, setRequests] = useState([]); // State to store requests
+  const [requests, setRequests] = useState([]);
 
   // Fetch logged-in user ID
   useEffect(() => {
@@ -26,7 +24,7 @@ export default function Header() {
     };
 
     fetchLoggedInUserId();
-  });
+  }, []);
 
   // Fetch requests and update notification count
   useEffect(() => {
@@ -34,8 +32,10 @@ export default function Header() {
 
     const fetchRequests = async () => {
       try {
-        const response = await axios.get(`/api/users/${loggedInUserId}/request`, { withCredentials: true });
-        setRequests(response.data); // Update requests state
+        const response = await axios.get(`/api/users/${loggedInUserId}/request`, {
+          withCredentials: true,
+        });
+        setRequests(response.data);
       } catch (error) {
         console.error(
           "Error fetching requests:",
@@ -46,7 +46,7 @@ export default function Header() {
 
     fetchRequests();
   }, [loggedInUserId]);
-  // console.log("header loaded----------->");
+
   // Update notification count whenever requests change
   useEffect(() => {
     setNotificationCount(requests.length);
@@ -57,17 +57,13 @@ export default function Header() {
       <div className="W-[100%]container px-4 flex justify-between items-center  py-4">
         {/* Logo Section */}
         <div>
-        <Link href="/" className="flex items-center">
-          {/* <Image src="/logo.svg" alt="Logo" width={40} height={40} className="mr-1" /> */}
-          <span className="text-lg font-bold">Mentorship Platform</span>
-        </Link>
+          <Link href="/" className="flex items-center">
+            <span className="text-lg font-bold">Mentorship Platform</span>
+          </Link>
         </div>
 
         {/* Desktop Navigation */}
         <nav className="hidden md:flex space-x-4">
-          <Link href="/" className="hover:underline">
-            Home
-          </Link>
           <Link href="/discover" className="hover:underline">
             Discover
           </Link>
@@ -103,7 +99,7 @@ export default function Header() {
         <button
           className="md:hidden text-white"
           onClick={() => setMenuOpen(!menuOpen)}
-          aria-label="Toggle menu"
+          aria-label={menuOpen ? "Close menu" : "Open menu"}
         >
           <svg
             className="w-6 h-6"
@@ -132,37 +128,32 @@ export default function Header() {
       </div>
 
       {/* Mobile Navigation */}
-      {menuOpen && (
-        <nav className="md:hidden bg-blue-700">
-          <Link href="/" className="block px-4 py-1 hover:bg-blue-500">
-            Home
-          </Link>
-          <Link href="/discover" className="block px-4 py-1 hover:bg-blue-500">
-            Discover
-          </Link>
-          <Link href="/matchmaking" className="block px-4 py-1 hover:bg-blue-500">
-            Matches
-          </Link>
-          <Link href="/profile" className="block px-4 py-1 hover:bg-blue-500">
-            Profile
-          </Link>
-          <Link href="/profile/connections" className="block px-4 py-1 hover:bg-blue-500">
-            Connected
-          </Link>
-          <Link href="/profile/requests" className="block px-4 py-1 hover:bg-blue-500">
-            Requests
-          </Link>
-          {loggedInUserId ? (
-            <Link href="/logout" className="block px-4 py-1 hover:bg-blue-500">
-              Logout
+      <div
+        className={`md:hidden fixed inset-0 h-1/2 w-1/2 bg-blue-700 bg-opacity-95 transform ${
+          menuOpen ? "translate-x-0" : "-translate-x-full"
+        } transition-transform duration-300 ease-in-out`}
+      >
+        <nav className="flex flex-col items-center justify-center space-y-4 h-full">
+          {[
+            { href: "/", label: "Home" },
+            { href: "/discover", label: "Discover" },
+            { href: "/matchmaking", label: "Matches" },
+            { href: "/profile", label: "Profile" },
+            { href: "/profile/connections", label: "Connected" },
+            { href: "/profile/requests", label: "Requests" },
+            { href: loggedInUserId ? "/logout" : "/login", label: loggedInUserId ? "Logout" : "Login" },
+          ].map((item) => (
+            <Link
+              key={item.href}
+              href={item.href}
+              className="block text-lg text-white hover:underline"
+              onClick={() => setMenuOpen(false)} // Close menu on click
+            >
+              {item.label}
             </Link>
-          ) : (
-            <Link href="/login" className="block px-4 py-1 hover:bg-blue-500">
-              Login
-            </Link>
-          )}
+          ))}
         </nav>
-      )}
+      </div>
     </header>
   );
 }

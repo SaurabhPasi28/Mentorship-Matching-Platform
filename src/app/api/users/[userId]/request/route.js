@@ -49,7 +49,7 @@ export async function GET(req, { params }) {
       return new Response(JSON.stringify({ message: "Unauthorized" }), { status: 401 });
     }
 
-    const user = await User.findById(userId).populate("requests", "username email");
+    const user = await User.findById(userId).populate("requests", "username email profilePicture");
     if (!user) {
       return new Response(JSON.stringify({ message: "User not found" }), { status: 404 });
     }
