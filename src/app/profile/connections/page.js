@@ -79,7 +79,7 @@ export default function ConnectionsPage() {
                   {/* View Profile Button */}
                   <Link
                     href={`/profile/${user._id}`}
-                    className="bg-indigo-600 text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300"
+                    className="bg-indigo-600 h-fit text-white px-4 py-2 rounded-md hover:bg-indigo-700 transition duration-300"
                   >
                     View Profile
                   </Link>

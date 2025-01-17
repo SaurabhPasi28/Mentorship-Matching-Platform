@@ -6,7 +6,7 @@ dbconnect();
 
 export async function GET(request, { params }) {
   try {
-    const { userId } = params;
+    const { userId } = await params;
 
     const user = await User.findOne({ _id: userId }).select("-password");
 

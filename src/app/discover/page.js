@@ -133,7 +133,7 @@ export default function DiscoverPage() {
     <div className="mt-4 flex justify-between">
       <Link
         href={`/profile/${user._id}`}
-        className="px-4 py-2 text-white bg-blue-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
+        className="px-4 py-2 h-fit text-white bg-blue-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
       >
         View Profile
       </Link>

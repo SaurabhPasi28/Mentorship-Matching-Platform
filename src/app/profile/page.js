@@ -14,6 +14,8 @@ export default function ProfilePage() {
   const [formData, setFormData] = useState({});
   const [selectedFile, setSelectedFile] = useState(null);
   const [imageUrl, setImageUrl] = useState(null);
+  const [upload, setUpload] = useState(null);
+  
 
   const handleFileChange = (event) => {
     setSelectedFile(event.target.files[0]);
@@ -27,7 +29,7 @@ export default function ProfilePage() {
       const Data = new FormData();
       Data.append("file", file);
 
-      console.log("working till here>>>>>>>>>>1")
+      // console.log("working till here>>>>>>>>>>1")
       const response = await fetch("/api/upload", {
         method: "POST",
         body: Data,
@@ -36,7 +38,7 @@ export default function ProfilePage() {
       const data = await response.json();
   
       if (data.message === "success") {
-        console.log("Uploaded Image URL:", data.imgUrl);
+        // console.log("Uploaded Image URL:", data.imgUrl);
         return data.imgUrl;
       } else {
         console.error("Upload Failed:---->", data.error || data.message);
@@ -48,10 +50,13 @@ export default function ProfilePage() {
 
   const handleUpload = async (e) => {
     e.preventDefault();
+    setUpload(true)
     if (selectedFile) {
       const url = await UploadImage(selectedFile);
 
       setImageUrl(url);
+      setSelectedFile(null)
+      setUpload(false)
     }
   };
   ////profile update section end
@@ -86,7 +91,7 @@ export default function ProfilePage() {
         formData.profilePicture=imageUrl;
       }
       const response = await axios.put('/api/users/profile', formData);
-      console.log("Profile updated:", response.data);
+      // console.log("Profile updated:", response.data);
       setUser(response.data.data);
       setIsEditing(false); // Exit edit mode
       alert('Profile updated successfully!');
@@ -111,21 +116,21 @@ export default function ProfilePage() {
           <div className='flex flex-col items-center space-y-4'>
             <h1 className="text-3xl mb-4 font-bold text-gray-900">{user.username}</h1>
             <div className='relative w-48 h-48 md:w-60 md:h-60 overflow-hidden rounded-full'>
-          <Image
-            src={user.profilePicture || "/default-image.png"} // Fallback to default image
-            alt="User Profile Picture"
-            layout="fill"
-            objectFit="cover"
-            className="mx-auto rounded-full shadow-md border border-gray-200 object-cover"
-          />
+              <Image
+                src={imageUrl|| user.profilePicture || "/default-image.png"} // Fallback to default image
+                alt="User Profile Picture"
+                layout="fill"
+                
+                objectFit="cover"
+                className="mx-auto rounded-full shadow-md border border-gray-200 object-cover"
+              />
           </div>
-            {/* <ImageUploader/> */}
-            <div>
+            <div className='flex'>
             <label
               htmlFor="file-upload"
-              className="cursor-pointer bg-green-500 text-white py-2 px-6 rounded-md hover:bg-green-600 transition-colors duration-200"
+              className="cursor-pointer text-center bg-green-500 text-white py-2 px-2 rounded-md hover:bg-green-600 transition-colors duration-200 block w-48 overflow-hidden text-ellipsis whitespace-nowrap"
             >
-              Choose Image
+              {selectedFile ? selectedFile.name : "Choose Image"}
             </label>
 
             {/* Hidden file input */}
@@ -133,14 +138,27 @@ export default function ProfilePage() {
               id="file-upload"
               type="file"
               onChange={handleFileChange}
-              className="hidden"
+              className='hidden'
             />
+
+          {/* {selectedFile && (
+            <p className="mt-2 text-sm text-gray-600 font-semibold">
+            {selectedFile.name}
+          </p>
+          )} */}
 
             <button
               onClick={handleUpload}
-              className="ml-2 sm:ml-16 bg-blue-500 text-white py-2 px-6 rounded-md hover:bg-blue-600 transition-colors duration-200"
+              className={`ml-2 sm:ml-16 py-2 px-6 rounded-md text-white transition-all duration-200 ${
+                upload === true
+                  ? "bg-gray-400 cursor-not-allowed"
+                  : "bg-blue-500 hover:bg-blue-600"
+              }`}
+              disabled={upload === true} // Disable the button only when `upload` is true
+              aria-busy={upload === true} // Accessibility: Indicate loading state
+
             >
-              Upload
+              {upload === true ? "Uploading..." : "Upload"}
             </button>
             </div>
             </div>

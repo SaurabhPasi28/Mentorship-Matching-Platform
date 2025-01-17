@@ -14,7 +14,7 @@ const ImageUploader = () => {
       const formData = new FormData();
       formData.append("file", file);
 
-      console.log("working till here>>>>>>>>>>1")
+      // console.log("working till here>>>>>>>>>>1")
       const response = await fetch("/api/upload", {
         method: "POST",
         body: formData,
@@ -23,7 +23,7 @@ const ImageUploader = () => {
       const data = await response.json();
   
       if (data.message === "success") {
-        console.log("Uploaded Image URL:", data.imgUrl);
+        // console.log("Uploaded Image URL:", data.imgUrl);
         return data.imgUrl;
       } else {
         console.error("Upload Failed:---->", data.error || data.message);

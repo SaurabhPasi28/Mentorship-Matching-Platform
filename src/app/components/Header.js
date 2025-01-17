@@ -129,11 +129,11 @@ export default function Header() {
 
       {/* Mobile Navigation */}
       <div
-        className={`md:hidden fixed inset-0 h-1/2 w-1/2 bg-blue-700 bg-opacity-95 transform ${
+        className={`md:hidden fixed inset-0 h-fit w-1/2 bg-blue-700 bg-opacity-95 transform py-2 ${
           menuOpen ? "translate-x-0" : "-translate-x-full"
         } transition-transform duration-300 ease-in-out`}
       >
-        <nav className="flex flex-col items-center justify-center space-y-4 h-full">
+        <nav className="flex flex-col items-center justify-center space-y-2 h-full">
           {[
             { href: "/", label: "Home" },
             { href: "/discover", label: "Discover" },

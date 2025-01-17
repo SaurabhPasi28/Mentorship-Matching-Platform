@@ -82,7 +82,7 @@ export default function MatchmakingPage() {
               <div className="flex w-full justify-between">
                 <Link
                   href={`/profile/${match._id}`}
-                  className="px-4 py-2 bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300 ease-in-out"
+                  className="px-4 py-2 h-fit bg-green-600 text-white rounded-md shadow-md hover:bg-green-700 transition duration-300 ease-in-out"
                 >
                   View Profile
                 </Link>
