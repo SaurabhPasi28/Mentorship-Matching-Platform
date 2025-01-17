@@ -90,16 +90,17 @@ export default function DiscoverPage() {
             </div>
 
             {/* Displaying Users */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="flex flex-wrap justify-evenly sm:grid-cols-2 lg:grid-cols-3 gap-8">
   {users.length > 0 ? (
     users.map((user) => (
       <div
         key={user._id}
-        className="bg-white border p-2 rounded-lg shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out"
+        className="bg-white border w-96 p-2 rounded-lg shadow-xl transform hover:scale-105 hover:shadow-2xl transition-all duration-300 ease-in-out"
       >
-       <div className="flex flex-col sm:flex-row bg-white border p-6 rounded-lg shadow-xl hover:shadow-2xl transform transition-all duration-300 ease-in-out">
+       <div className="flex flex-col w-full bg-white border p-6 rounded-lg shadow-xl hover:shadow-2xl transform transition-all duration-300 ease-in-out">
   {/* Image Section - Left Side */}
-  <div className="flex-shrink-0 relative w-24 h-24 sm:w-32 sm:h-32 md:w-40 md:h-40 overflow-hidden rounded-md">
+  <div className="flex">
+  <div className="flex-shrink-0 relative w-28 h-40 sm:32 sm:32 md:w-40 md:h-40 overflow-hidden rounded-md">
     <Image
       src={user.profilePicture || "/default-image.png"} // Fallback to default image
       alt="User Profile Picture"
@@ -110,7 +111,7 @@ export default function DiscoverPage() {
   </div>
 
   {/* Details Section - Right Side */}
-  <div className="flex flex-col flex-grow sm:ml-6 mt-4 sm:mt-0">
+  <div className="flex flex-col flex-grow ml-6 sm:ml-6 mt-0">
     <h2 className="text-lg sm:text-xl font-semibold text-gray-800">{user.username}</h2>
     <p className="text-sm sm:text-base text-gray-600 mt-1">{user.bio || "No bio available"}</p>
 
@@ -127,7 +128,9 @@ export default function DiscoverPage() {
     </div>
 
     {/* Button Group */}
-    <div className="mt-4 flex space-x-4">
+  </div>
+  </div>
+    <div className="mt-4 flex justify-between">
       <Link
         href={`/profile/${user._id}`}
         className="px-4 py-2 text-white bg-blue-600 rounded-md shadow-md hover:bg-blue-700 transition duration-300 ease-in-out"
@@ -136,7 +139,6 @@ export default function DiscoverPage() {
       </Link>
       <SendRequestButton targetUserId={user._id} />
     </div>
-  </div>
 </div>
 
       </div>
